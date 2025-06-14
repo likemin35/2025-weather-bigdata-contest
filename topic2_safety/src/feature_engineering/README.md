@@ -1,0 +1,66 @@
+# Feature Engineering 모듈
+
+날짜, 전년도 신고, 날씨, 기상특보, 신고 분류 기반 파생 변수를 자동으로 생성합니다.
+
+## 📦 구성
+
+```
+feature_engineering/
+├── __init__.py
+├── date_features.py
+├── prev_year_features.py
+├── weather_features.py
+├── alert_features.py
+├── category_features.py
+└── full_pipeline.py
+```
+
+## 💡 주요 함수
+
+- `feature_engineering(df, df_cat, df_wrn)`
+
+  → 전체 피처 엔지니어링 파이프라인을 한 번에 적용
+
+## 🖥️ 사용법 안내
+
+### ▶️ Jupyter Notebook (로컬)
+
+1. 저장소 클론
+
+```bash
+git clone https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
+cd weather-bigdata-contest
+```
+
+2. 사용 예시
+
+```python
+from feature_engineering.full_pipeline import feature_engineering
+
+df = feature_engineering(df_call, df_cat, df_wrn)
+```
+
+---
+
+### ▶️ Google Colab
+
+1. 저장소 클론
+
+```python
+!git clone https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
+```
+
+2. 경로 추가
+
+```python
+import sys
+sys.path.append("/content/weather-bigdata-contest")
+```
+
+3. 사용 예시
+
+```python
+from feature_engineering.full_pipeline import feature_engineering
+
+df = feature_engineering(df_call, df_cat, df_wrn)
+```
