@@ -1,3 +1,6 @@
+import pandas as pd
+import numpy as np
+
 def add_weather_features(df):
     df = df.copy()
 

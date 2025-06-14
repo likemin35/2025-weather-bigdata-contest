@@ -1,3 +1,5 @@
+import pandas as pd
+
 def add_alert_features(df, df_wrn):
     df = df.copy()
     df_wrn = df_wrn.copy()

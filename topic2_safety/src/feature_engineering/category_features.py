@@ -1,3 +1,5 @@
+import pandas as pd
+
 def add_category_features(df, df_cat):
     df_cat = df_cat.copy()
     df_cat["tm"] = pd.to_datetime(df_cat["tm"])

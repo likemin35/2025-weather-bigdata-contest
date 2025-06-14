@@ -28,14 +28,25 @@ feature_engineering/
 1. 저장소 클론
 
 ```bash
-git clone https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
+git clone -b safety https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
 cd weather-bigdata-contest
+```
+
+2. 경로 추가
+
+```python
+import sys
+sys.path.append("../topic2_safety/src")
 ```
 
 2. 사용 예시
 
 ```python
 from feature_engineering.full_pipeline import feature_engineering
+
+df_call = pd.read_csv("../topic2_safety/data/processed/preprocessed_C_neighbor_only.csv")
+df_cat = pd.read_csv("../topic2_safety/data/processed/preprocessed_cat119.csv")
+df_wrn = pd.read_csv("../topic2_safety/data/processed/busan_weather_warning.csv")
 
 df = feature_engineering(df_call, df_cat, df_wrn)
 ```
@@ -47,20 +58,26 @@ df = feature_engineering(df_call, df_cat, df_wrn)
 1. 저장소 클론
 
 ```python
-!git clone https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
+!git clone -b safety https://github.com/s0nghyunje0ng/2025-weather-bigdata-contest.git
 ```
 
 2. 경로 추가
 
 ```python
 import sys
-sys.path.append("/content/weather-bigdata-contest")
+sys.path.append("/content/2025-weather-bigdata-contest/topic2_safety/src")
 ```
 
 3. 사용 예시
 
 ```python
 from feature_engineering.full_pipeline import feature_engineering
+
+base_url = "https://raw.githubusercontent.com/s0nghyunje0ng/2025-weather-bigdata-contest/safety/topic2_safety/data/processed/"
+
+df_call = pd.read_csv(base_url + "preprocessed_C_neighbor_only.csv")
+df_cat = pd.read_csv(base_url + "preprocessed_cat119.csv")
+df_wrn = pd.read_csv(base_url + "busan_weather_warning.csv")
 
 df = feature_engineering(df_call, df_cat, df_wrn)
 ```
