@@ -44,8 +44,8 @@ sys.path.append("../topic2_safety/src")
 ```python
 from feature_engineering.full_pipeline import feature_engineering
 
-df_call = pd.read_csv("../topic2_safety/data/processed/preprocessed_C_neighbor_only.csv")
-df_cat = pd.read_csv("../topic2_safety/data/processed/preprocessed_cat119.csv")
+df_call = pd.read_csv("../topic2_safety/data/processed/call119_preprocessed_C_neighbor_only.csv")
+df_cat = pd.read_csv("../topic2_safety/data/processed/cat119_preprocessed.csv")
 df_wrn = pd.read_csv("../topic2_safety/data/processed/busan_weather_warning.csv")
 
 df = feature_engineering(df_call, df_cat, df_wrn)
@@ -75,8 +75,8 @@ from feature_engineering.full_pipeline import feature_engineering
 
 base_url = "https://raw.githubusercontent.com/s0nghyunje0ng/2025-weather-bigdata-contest/safety/topic2_safety/data/processed/"
 
-df_call = pd.read_csv(base_url + "preprocessed_C_neighbor_only.csv")
-df_cat = pd.read_csv(base_url + "preprocessed_cat119.csv")
+df_call = pd.read_csv(base_url + "call119_preprocessed_C_neighbor_only.csv")
+df_cat = pd.read_csv(base_url + "cat119_preprocessed.csv")
 df_wrn = pd.read_csv(base_url + "busan_weather_warning.csv")
 
 df = feature_engineering(df_call, df_cat, df_wrn)
