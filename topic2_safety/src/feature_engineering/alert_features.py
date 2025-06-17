@@ -36,7 +36,7 @@ def add_alert_features(df, df_wrn):
 
     df = df.merge(df_agg, left_on="tm", right_on="발효일", how="left").drop(columns=["발효일"])
 
-    df["has_alert"] = df["has_alert"].fillna(0).astype(int)
+    df["has_alert"] = df["has_alert"].fillna(0).astype("int8")
     df["alert_count"] = df["alert_count"].fillna(0).astype(int)
     df["alert_type"] = df["alert_type"].apply(lambda x: x if isinstance(x, set) else set())
     df["alert_streak"] = df["alert_streak"].fillna(0).astype(int)

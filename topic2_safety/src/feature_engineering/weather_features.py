@@ -4,7 +4,7 @@ import numpy as np
 def add_weather_features(df):
     df = df.copy()
 
-    df["is_rainy"] = (df["rn_day"] > 0).astype(int)
+    df["is_rainy"] = (df["rn_day"] > 0).astype("int8")
     df["rn_day_bin"] = pd.cut(
         df["rn_day"],
         bins=[-1, 0, 1, 10, 30, 70, np.inf],

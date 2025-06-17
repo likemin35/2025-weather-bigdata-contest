@@ -11,9 +11,9 @@ def add_date_features(df):
     df["dayofweek"] = df["tm"].dt.dayofweek
     df["dayofweek_sin"] = np.sin(2 * np.pi * df["dayofweek"] / 7)
     df["dayofweek_cos"] = np.cos(2 * np.pi * df["dayofweek"] / 7)
-    df["is_weekend"] = (df["dayofweek"] >= 5).astype(int)
+    df["is_weekend"] = (df["dayofweek"] >= 5).astype("int8")
 
     kr_holidays = holidays.Korea()
-    df["is_holiday"] = df["tm"].dt.date.apply(lambda x: x in kr_holidays).astype(int)
+    df["is_holiday"] = df["tm"].dt.date.apply(lambda x: x in kr_holidays).astype("int8")
 
     return df

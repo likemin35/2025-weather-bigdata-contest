@@ -47,9 +47,9 @@ def add_category_features(df, df_cat, target_subcats=None):
     gu_cols_to_fill = df_gu_counts.columns.drop(["tm", "address_gu"])
     
     for col in sub_address_cols_to_fill:
-        df[col] = df[col].fillna(0)
+        df[col] = df[col].fillna(0).astype("int8")
         
     for col in gu_cols_to_fill:
-        df[col] = df[col].fillna(0)
+        df[col] = df[col].fillna(0).astype("int8")
 
     return df
