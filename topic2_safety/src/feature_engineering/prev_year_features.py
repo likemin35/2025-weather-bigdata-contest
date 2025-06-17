@@ -28,7 +28,7 @@ def apply_prev_year_features(df, lookup_table):
     df = df.merge(lookup_table, on=["tm", "sub_address"], how="left")
 
     # 전년도 데이터 존재 유무 플래그 생성
-    df["has_prev_year_data"] = (df["year"] != 2020).astype(int)
+    df["has_prev_year_data"] = (df["year"] != 2020).astype("int8")
 
     # 결측치 처리
     mask_to_fill = (df["year"] != 2020)
