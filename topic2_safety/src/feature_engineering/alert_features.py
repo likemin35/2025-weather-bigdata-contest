@@ -11,7 +11,7 @@ def add_alert_features(df, df_wrn):
     df_wrn_filtered = df_wrn[df_wrn["특보명령"] != "해제"].copy()
 
     level_score_map = {"주의보": 1, "경보": 2}
-    type_score_map = {"강풍": 1, "건조": 1, "태풍": 3, "폭염": 2, "폭풍해일": 3, "풍랑": 2, "호우": 2}
+    type_score_map = {"강풍": 2, "건조": 2, "태풍": 3, "폭염": 3, "폭풍해일": 2, "풍랑": 1, "호우": 3}
 
     df_wrn_filtered["type_score"] = df_wrn_filtered["특보종류"].map(type_score_map)
     df_wrn_filtered["level_score"] = df_wrn_filtered["특보수준"].map(level_score_map)
@@ -30,19 +30,12 @@ def add_alert_features(df, df_wrn):
         .reset_index(drop=True)
     )
 
-    streaks = []
-    count = 0
-    for i in range(len(df_agg)):
-        if i == 0:
-            count = 1
-        else:
-            prev = df_agg.loc[i - 1, "발효일"]
-            curr = df_agg.loc[i, "발효일"]
-            count = count + 1 if (curr - prev).days == 1 else 1
-        streaks.append(count)
-    df_agg["alert_streak"] = streaks
+    is_new_streak = df_agg["발효일"].diff().dt.days != 1
+    streak_group_id = is_new_streak.cumsum()
+    df_agg["alert_streak"] = df_agg.groupby(streak_group_id).cumcount() + 1
 
     df = df.merge(df_agg, left_on="tm", right_on="발효일", how="left").drop(columns=["발효일"])
+
     df["has_alert"] = df["has_alert"].fillna(0).astype(int)
     df["alert_count"] = df["alert_count"].fillna(0).astype(int)
     df["alert_type"] = df["alert_type"].apply(lambda x: x if isinstance(x, set) else set())
