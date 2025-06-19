@@ -7,8 +7,9 @@ def add_weather_features(df):
     df["is_rainy"] = (df["rn_day"] > 0).astype("int8")
     df["rn_day_bin"] = pd.cut(
         df["rn_day"],
-        bins=[-1, 0, 1, 10, 30, 70, np.inf],
-        labels=["none", "trace", "light", "moderate", "heavy", "very_heavy"]
+        bins=[-1, 0, 10.5, 33.0, 80, np.inf],
+        labels=["none", "light", "moderate", "heavy", "very_heavy"],
+        right=True  # 0 == none
     )
     df["rn_day_3d_sum"] = (
         df.groupby(["sub_address"], observed=False)["rn_day"]
@@ -28,5 +29,12 @@ def add_weather_features(df):
     )
     df["apparent_temp"] = (-0.2442 + 0.55399 * Tw + 0.45535 * Ta - 0.0022 * (Tw ** 2) + 0.00278 * Tw * Ta + 3.0)
     df["discomfort_index"] = ((9 / 5) * Ta - 0.55 * (1 - RH / 100) * ((9 / 5) * Ta - 26) + 32)
+
+    # ===========================
+    # ★★★ 새로 추가된 피처 ★★★
+    # ===========================
+
+    df["wind_gust_factor"] = df["ws_ins_max"] / (df["ws_max"] + 1e-6)  # zero division 방지
+    df["is_rainy_and_windy"] = ((df["rn_day"] > 30) & (df["ws_max"] > 10)).astype("int8")
 
     return df

@@ -6,18 +6,29 @@ def create_prev_year_lookup(df_train):
     df_prev = df_train[["tm", "sub_address", "call_count"]].copy()
     df_prev["tm"] += pd.DateOffset(years=1)
     
-    # 5일치 윈도우 데이터 생성
-    df_all = pd.concat([
+    # 윈도우 데이터 생성
+    df_all_5d = pd.concat([
         df_prev.assign(tm=df_prev["tm"] + timedelta(days=d)) for d in [-2, -1, 0, 1, 2]
+    ])
+    df_all_7d = pd.concat([
+        df_prev.assign(tm=df_prev["tm"] + timedelta(days=d)) for d in [-3, -2, -1, 0, 1, 2, 3]
     ])
     
     # 전년도 인접일 평균 call_count 계산
-    df_avg_lookup = (
-        df_all.groupby(["tm", "sub_address"], observed=False)["call_count"]
+    lookup_5d = (
+        df_all_5d.groupby(["tm", "sub_address"], observed=False)["call_count"]
         .mean()
         .reset_index()
-        .rename(columns={"call_count": "call_count_prev_year"})
+        .rename(columns={"call_count": "call_count_prev_year_5d"})
     )
+    lookup_7d = (
+        df_all_7d.groupby(["tm", "sub_address"], observed=False)["call_count"]
+        .mean()
+        .reset_index()
+        .rename(columns={"call_count": "call_count_prev_year_7d"})
+    )
+
+    df_avg_lookup = pd.merge(lookup_5d, lookup_7d, on=["tm", "sub_address"], how="outer")
     return df_avg_lookup
 
 def apply_prev_year_features(df, lookup_table):
