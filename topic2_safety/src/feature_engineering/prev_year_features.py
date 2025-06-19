@@ -43,8 +43,10 @@ def apply_prev_year_features(df, lookup_table):
 
     # 결측치 처리
     mask_to_fill = (df["year"] != 2020)
-    df.loc[mask_to_fill, "call_count_prev_year"] = df.loc[mask_to_fill, "call_count_prev_year"].fillna(0)
+    df.loc[mask_to_fill, "call_count_prev_year_5d"] = df.loc[mask_to_fill, "call_count_prev_year_5d"].fillna(0)
+    df.loc[mask_to_fill, "call_count_prev_year_7d"] = df.loc[mask_to_fill, "call_count_prev_year_7d"].fillna(0)
     
-    df["call_count_prev_year"] = df["call_count_prev_year"].fillna(-1)
+    df["call_count_prev_year_5d"] = df["call_count_prev_year_5d"].fillna(-1)
+    df["call_count_prev_year_7d"] = df["call_count_prev_year_7d"].fillna(-1)
     
     return df
