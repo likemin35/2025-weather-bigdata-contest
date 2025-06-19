@@ -7,7 +7,7 @@ def add_category_features(df, df_cat, target_subcats=None):
     df_cat["tm"] = pd.to_datetime(df_cat["tm"])
 
     if target_subcats is None:
-        target_subcats = ["부상", "교통사고", "업무운행", "구급기타", "자연재해"]
+        target_subcats = ["구급_부상", "구급_교통사고", "기타_업무운행", "구급_구급기타", "구조_자연재해"]
     
     df_cat["has_call"] = 1
 
